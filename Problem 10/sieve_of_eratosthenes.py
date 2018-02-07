@@ -1,17 +1,23 @@
-#intro
-print("The sieve of Eratothenes - by Darren Bellew")
+from datetime import datetime
+from math import sqrt, floor
 
-#sievenum = input("Number to sive primes for: ")
-sievenum = 23
+starttime=datetime.now()
 
-sieve = [x for x in range(2,sievenum)]
-p=2
+val = 2000000
+stop = int(floor(sqrt(val)))
+print("stop: " + str(stop))
+sieve = [x for x in range(2,val)]
 
-sieve_notprime = sieve[p-2::p]
+def remove_nonprimes(sieve, p):
+    markset = set(sieve[p-2::p][1::])
+    sieve = list(filter(lambda x: x not in markset, sieve))
+    return sieve
 
-print(str(sieve_notprime))
+for p in range(2, stop):
+    if(p in sieve):
+        sieve=remove_nonprimes(sieve, p)
 
-p=5
-sieve_notprime.extend(sieve[p-2::p])
+print(str(sum(sieve)))
 
-print(str(sieve_notprime))
+timeelapsed=datetime.now()-starttime
+print("time elapsed (hh:mm:ss.ms) {}:".format(timeelapsed))
